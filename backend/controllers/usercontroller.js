@@ -2,13 +2,11 @@ const User = require('../models/usermodel');
 
 exports.getUsersForSidebar = async (req, res) => {
     try {
-        // Log the value of req.user to see if it's being set correctly
-        console.log('req.user:', req.session.userId);
-
-        const loggedInUserId = req.session.userId ? req.session.userId : null;
+        const loggedInUserId = req.headers.jwt; // Assuming you store user ID in the JWT payload
 
         if (!loggedInUserId) {
-            return res.status(401).json({ error: 'Unauthorized' });
+            // Handle the case where user is not logged in
+            return res.status(401).json({ error: 'Unauthorized - User not logged in' });
         }
 
         const allUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
