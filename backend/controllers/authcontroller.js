@@ -1,4 +1,3 @@
-//const User=require('./../models/usermodel')
 const bycryptjs=require('bcryptjs')
 const generateTokenandSetCookies=require('./../utils/generatetoken');
 const User = require('./../models/usermodel');
@@ -15,8 +14,8 @@ exports.loginUser=async(req,res)=>{
             message:"login SuccessFul"
         })
     }
-    catch{
-        res.status(500).json({error})
+    catch(error){
+        res.status(500).json({message:error.message})
     }
 }
 exports.logoutUser=(req,res)=>{
